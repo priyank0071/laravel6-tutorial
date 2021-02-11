@@ -16,9 +16,10 @@ return view('articles.index',[
 ]);
     }
 
-    public function show($articleid)
+    public function show(Article $article)
     {
-$article = Article::find($articleid);
+//$article = Article::findOrFail($articleid);
+//return $article;
 return view('articles.show',[
     'article' => $article 
 ]);
@@ -31,46 +32,32 @@ return view('articles.show',[
 
     public function store()
     {
-//dump(request()->all());
-
-request()->validate([
-    'title' => 'required',
-    'excerpt' => 'required',
-    'body' => 'required'
-]);
-
-$article = new Article();
-
-$article->title = request('title');
-$article->excerpt = request('excerpt');
-$article->body = request('body');
-
-$article->save();
+Article::create($this->validatedArticle());
 return redirect('/articles');
 
     }
-    public function edit($id)
+    public function edit(Article $article)
     {
-        $article = Article::find($id);
+        
         return view('articles.edit', compact('article'));
     }
-    public function update($id)
+    public function update(Article $article)
     {
-        request()->validate([
-            'title' => 'required',
-            'excerpt' => 'required',
-            'body' => 'required'
-        ]);
-        $article = Article::find($id);
-        $article->title = request('title');
-$article->excerpt = request('excerpt');
-$article->body = request('body');
-//dd($article);
-$article->save();
-return redirect('/articles');
+        $article->update($this->validatedArticle());
+return redirect($article->path());
+
     }
     public function destroy()
     {
 
+    }
+
+    protected function validatedArticle()
+    {
+        return request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required'
+        ]);
     }
 }
