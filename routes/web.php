@@ -16,4 +16,16 @@ Route::get('/', function () {
 });
 
 
-Route::get('/posts/{post}','PostsController@show');
+Route::get('/about', function () {
+   // $article = App\Article::all();
+   //$article = App\Article::take(2)->get();
+   //$article = App\Article::paginate(2);
+   $articles = App\Article::take(3)->latest()->get();
+    //return $article;
+    return view('about',[
+        'articles' => $articles 
+    ]);
+});
+
+Route::get('/articles','ArticlesController@index');
+Route::get('/articles/{article}','ArticlesController@show');
