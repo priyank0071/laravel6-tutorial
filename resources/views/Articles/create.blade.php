@@ -36,6 +36,20 @@
 
                 @endif
                 <br>
+                <br>
+                <strong>Tags : </strong>
+                <select name="tags[]" multiple>
+                  @foreach ($tags as $tag)
+                      <option value="{{ $tag->id}}">{{ $tag->name}}</option>
+                  @endforeach
+                </select>
+                
+                @if($errors->has('tags'))                  
+              
+                <p class="help is-danger">{{ $message}}</p>
+
+                @endif
+                <br>
                 <button class="button is-info" type="submit">Submit</button>
     
             </form>
