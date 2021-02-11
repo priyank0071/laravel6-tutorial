@@ -24,6 +24,10 @@ Released   : 20140225
 
 <link href="/css/app.css"     rel="stylesheet" />
 
+
+
+
+@yield('head')
 </head>
 
 <body>
